@@ -53,6 +53,7 @@ describe("acceptance workflow", () => {
     const r = await new Session().json("/api/cron/sync", { headers: { Authorization: `Bearer ${CRON}` } });
     expect(r.status).toBe(200);
     expect(r.body.schedule.accounts).toBe(1);
+    expect(r.body.retention).not.toBeNull();
     expect(r.body.worker.failed).toBe(0);
     // Drain anything left (backfill chunks).
     for (let i = 0; i < 5 && (await prisma.syncJob.count({ where: { status: "QUEUED" } })); i++) {

@@ -19,7 +19,7 @@
    INITIAL_ADMIN_EMAIL=… INITIAL_ADMIN_PASSWORD='…' npm run db:seed
    ```
    Re-running `db:seed` is safe: it refreshes reference data and never overwrites role edits.
-5. **Scheduled sync (free alternative to Vercel Cron).** The repository workflow at `.github/workflows/sync-cron.yml` calls `/api/cron/sync` hourly and `/api/cron/worker` every 5 minutes. `vercel.json` intentionally contains no cron declarations because Vercel Hobby supports only daily crons.
+5. **Scheduled sync (free alternative to Vercel Cron).** The repository workflow at `.github/workflows/sync-cron.yml` calls `/api/cron/sync` daily at 00:07 UTC (05:37 IST) and `/api/cron/worker` every 5 minutes. `vercel.json` intentionally contains no cron declarations because Vercel Hobby supports only daily crons.
    * In GitHub repository **Settings → Secrets and variables → Actions**, add `APP_URL` (the production base URL, without a trailing slash) and `CRON_SECRET`.
    * Set the same high-entropy `CRON_SECRET` value in the Vercel Production environment variables. The workflow sends it in the authenticated request header; do not put the value in workflow source.
    * Enable GitHub Actions and push the workflow to the repository's default branch. Scheduled workflows run from that branch; GitHub may delay scheduled starts, and scheduled runs can be paused for inactive repositories.

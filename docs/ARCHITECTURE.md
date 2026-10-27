@@ -77,8 +77,8 @@ There are also check constraints (non-negative spend and impressions, `dateFrom 
 
 | Schedule | Work |
 |---|---|
-| Hourly (`/api/cron/sync`) | Structure discovery (campaigns → ad sets → ads → creatives), then insights for the last `recentRefreshDays` (default 3) |
-| Daily (first hourly run after 23 h) | Re-fetch the last `attributionRefreshDays` (default 28) and breakdowns, to capture late conversions |
+| Daily (`/api/cron/sync`, 00:07 UTC) | Structure discovery (campaigns → ad sets → ads → creatives), insights for the last `recentRefreshDays` (default 3), and the daily attribution refresh |
+| Once per account | Backfill in 30-day chunks, newest first, back to `backfillMonths` (default 37, Meta's insights retention) |
 | Once per account | Backfill in 30-day chunks, newest first, back to `backfillMonths` (default 37, Meta's insights retention) |
 | Every 5 min (`/api/cron/worker`) | Drain the queue, so backfills progress |
 

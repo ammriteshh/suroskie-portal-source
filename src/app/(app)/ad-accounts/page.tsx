@@ -50,7 +50,7 @@ async function AdAccounts() {
     <>
       <PageHeader
         title="Ad accounts"
-        description={`Synchronisation status. Recent ${settings.recentRefreshDays} days refresh hourly; the last ${settings.attributionRefreshDays} days are re-fetched daily for late attribution.`}
+        description={`Synchronisation status. Recent ${settings.recentRefreshDays} days refresh on each scheduler run; the last ${settings.attributionRefreshDays} days are re-fetched daily for late attribution.`}
         actions={canIntegrate ? <Link href="/integrations" className="text-sm font-medium text-primary hover:underline">Manage Meta connections →</Link> : null}
       />
       <PageBody>
