@@ -19,10 +19,12 @@
    INITIAL_ADMIN_EMAIL=… INITIAL_ADMIN_PASSWORD='…' npm run db:seed
    ```
    Re-running `db:seed` is safe: it refreshes reference data and never overwrites role edits.
-5. **Cron.** `vercel.json` schedules `/api/cron/sync` hourly and `/api/cron/worker` every 5 minutes.
-   * Vercel sends `Authorization: Bearer $CRON_SECRET` automatically when `CRON_SECRET` is set.
-   * Sub-daily cron schedules need a paid Vercel plan.
-   * Each invocation processes jobs for up to `WORKER_TIME_BUDGET_MS` (capped at 270 s; `maxDuration` is 300 s).
+5. **Scheduled sync (free alternative to Vercel Cron).** The repository workflow at `.github/workflows/sync-cron.yml` calls `/api/cron/sync` hourly and `/api/cron/worker` every 5 minutes. `vercel.json` intentionally contains no cron declarations because Vercel Hobby supports only daily crons.
+   * In GitHub repository **Settings → Secrets and variables → Actions**, add `APP_URL` (the production base URL, without a trailing slash) and `CRON_SECRET`.
+   * Set the same high-entropy `CRON_SECRET` value in the Vercel Production environment variables. The workflow sends it in the authenticated request header; do not put the value in workflow source.
+   * Enable GitHub Actions and push the workflow to the repository's default branch. Scheduled workflows run from that branch; GitHub may delay scheduled starts, and scheduled runs can be paused for inactive repositories.
+   * GitHub Actions is free within the applicable included usage. Public repositories get free standard-runner usage; private repositories are subject to the account's monthly included minutes, so the five-minute worker may exceed a small quota. Check **Billing and plans → Actions** usage; this workflow does not guarantee unlimited free runner minutes.
+   * Requests retry transient failures and time out, with separate concurrency groups for the two schedules. The Postgres job queue deduplicates scheduled jobs and locks job claims. Each endpoint processes work for up to `WORKER_TIME_BUDGET_MS` (capped at 270 s; Vercel `maxDuration` is 300 s).
 6. **Domain.** Add the custom domain and keep HTTPS only. Cookies become `Secure` automatically when `APP_URL` is HTTPS.
 7. Follow [META_SETUP.md](META_SETUP.md) to connect Meta, then run its "First live run" checklist.
 
@@ -35,7 +37,7 @@ docker run --env-file .env suroskie-portal npm run worker         # sync worker 
 ```
 
 * Run **one** web service (scale horizontally if needed) and **one** worker process. Several workers are safe because job claiming uses `SKIP LOCKED` and allows one running job per account, but one is enough.
-* With the long-running worker you don't need the cron endpoints. Alternatively, keep the web app only and call the cron endpoints from any scheduler with the `Authorization: Bearer $CRON_SECRET` header.
+* With the long-running worker you don't need the cron endpoints. Alternatively, keep the web app only and call the cron endpoints from any scheduler using the shared `CRON_SECRET` authorization header.
 * Put a TLS-terminating reverse proxy in front. It must forward `X-Forwarded-For`, which rate limiting and the audit log use.
 
 ## Security checklist

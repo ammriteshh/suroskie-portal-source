@@ -6,7 +6,7 @@ import { errorResponse } from "@/lib/http";
 
 export const maxDuration = 300;
 
-/** Queue drain (Vercel Cron: every 5 minutes) so backfills progress between hourly schedules. */
+/** Queue drain (scheduled every 5 minutes) so backfills progress between hourly schedules. */
 export async function GET(req: NextRequest) {
   try {
     const auth = req.headers.get("authorization") ?? "";

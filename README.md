@@ -19,7 +19,7 @@ An internal web app that lets Suroskie's content team check how their creators' 
 
 ## Stack
 
-Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 + shadcn/ui (Radix) · Recharts · PostgreSQL + Prisma 7 · Better Auth · Vitest + Playwright-free HTTP e2e · Vercel Cron or a long-running Node worker.
+Next.js 16 (App Router, TypeScript) · Tailwind CSS 4 + shadcn/ui (Radix) · Recharts · PostgreSQL + Prisma 7 · Better Auth · Vitest + Playwright-free HTTP e2e · GitHub Actions scheduled endpoints or a long-running Node worker.
 
 ## Quick start (local)
 

@@ -7,7 +7,7 @@ Browser ──► Next.js (App Router, server components) ──► Report servi
                  │                                                       ▲
                  └─► /api/v1/* (JSON, CSV)                               │ idempotent upserts
                                                                          │
-Vercel Cron / npm run worker ──► scheduler ──► sync_job queue ──► worker ──► Meta Graph API
+GitHub Actions schedule / npm run worker ──► scheduler ──► sync_job queue ──► worker ──► Meta Graph API
 ```
 
 * **The database is the reporting layer.** Opening a page never calls Meta. All Meta traffic comes from the background sync.

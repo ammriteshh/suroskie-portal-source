@@ -8,8 +8,7 @@ import { errorResponse } from "@/lib/http";
 export const maxDuration = 300;
 
 /**
- * Scheduler entry point (Vercel Cron: hourly). Authenticated with CRON_SECRET via the
- * Authorization header, which Vercel Cron sends automatically when CRON_SECRET is set.
+ * Hourly scheduler entry point. Authenticated with CRON_SECRET via the Authorization header.
  */
 export async function GET(req: NextRequest) {
   try {

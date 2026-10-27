@@ -22,7 +22,7 @@ Legend:
 | 7 | Member signs in and searches for an authorised creator | ✅ |
 | 8 | Accurate, date-filtered performance from synced data | ✅ |
 | 9 | Cannot reach other creators' data or restricted metrics via API, URL or exports | ✅ |
-| 10 | Automatic refresh and last-successful-sync display | ✅ (cron endpoints tested) · 🟡 schedule runs once deployed |
+| 10 | Automatic refresh and last-successful-sync display | ✅ (cron endpoints tested) · 🟡 GitHub Actions secrets and schedule need production setup |
 
 ## By area
 
@@ -41,7 +41,7 @@ Legend:
 | | Postgres job queue: leases, crash recovery, dedupe, one job per account | ✅ |
 | | Idempotent upserts, revision history on attribution changes | ✅ |
 | | Manual sync and historical resync range | ✅ API · 🟢 UI |
-| | Vercel Cron config and standalone worker | 🟢 / 🟡 |
+| | GitHub Actions cron workflow and standalone worker | 🟢 / 🟡 |
 | | Data retention housekeeping | 🟢 |
 | **Mapping** | Creators (ID, name, handle, image, notes, status, team, owner) | ✅ |
 | | Creative assets (type, angle, hook, product, tags, launch date, notes) | ✅ API · 🟢 UI |

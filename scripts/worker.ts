@@ -1,5 +1,5 @@
 // Long-running sync worker for self-hosted deployments (Railway, Render, Fly, a VM, Docker).
-// On Vercel, use the cron endpoints instead (see vercel.json).
+// On Vercel, use the authenticated cron endpoints (scheduled via GitHub Actions).
 //   npm run worker          — runs forever: schedules hourly, drains the queue continuously
 //   npm run sync:once       — schedule + drain once, then exit (useful for cron or testing)
 import "dotenv/config";
